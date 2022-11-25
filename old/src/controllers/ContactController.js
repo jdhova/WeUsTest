@@ -1,6 +1,8 @@
 import Contact from '../models/Contact';
 import axios from 'axios';
-
+// import React, { useState, useEffect } from "react";
+// import { Table } from "react-bootstrap";
+// import ContactRow from "../components/ContactRow";
 /** 
  * This class controls the list of contacts for the app.
  * This would be a good place to implement the data
@@ -19,30 +21,29 @@ class ContactController {
     this.event = new Event('contactChange');
     this.contacts = [];
     this.count = 0;
-
   }
   
   getAll( options = null ) {
+    
+    axios.get("http://localhost:8080/api/getAll/")
+    .then(({ data }) => {
 
-    
-    
-    fetch("http://localhost:8080/api/getAll/")
-    .then(res => res.json())
-    .then(
-      (result) => {
-     console.log(result);
-       // setUsers(result)
-      }
-    )
-   
-    
-    
-    return this.contacts;
+      //return this.contacts.push(data);
+      
+     // console.log(data);
+      //setContacts(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+ return this.contacts;
   }
 
   add( fName, lName, email, phone, imageUrl ){
     let contact = new Contact( this.count, fName, lName, email, phone, imageUrl );
     if( contact instanceof Contact ){
+
 
       axios.post(
         'http://localhost:8080/api/post', 
