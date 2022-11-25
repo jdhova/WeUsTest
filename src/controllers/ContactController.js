@@ -26,14 +26,7 @@ class ContactController {
 
     
     
-    fetch("http://localhost:8080/api/getAll/")
-    .then(res => res.json())
-    .then(
-      (result) => {
-     console.log(result);
-       // setUsers(result)
-      }
-    )
+    
    
     
     
@@ -41,26 +34,42 @@ class ContactController {
   }
 
   add( fName, lName, email, phone, imageUrl ){
-    let contact = new Contact( this.count, fName, lName, email, phone, imageUrl );
-    if( contact instanceof Contact ){
-
-      axios.post(
-        'http://localhost:8080/api/post', 
-        contact)
-              .then(res => {
-                if (res.status === 200)
-                  alert('Contact successfully created')
-                else
-                  Promise.reject()
-              })
-              .catch(err => alert('Something went wrong'))
 
 
-      this.contacts.push(contact);
-      this.count++;
-      window.dispatchEvent(this.event);
-      return true;
+    if (!fName || !lName || !email || !phone || !imageUrl)
+    {
+        // check any field is empty 
+
+        alert('Please provide valid data.');
+    } else
+    {
+      let contact = new Contact( this.count, fName, lName, email, phone, imageUrl );
+      if( contact instanceof Contact ){
+
+        axios.post(
+          'http://localhost:8080/api/post', 
+          contact)
+                .then(res => {
+                  if (res.status === 200)
+                    alert('Contact successfully created')
+                  else
+                    Promise.reject()
+                })
+                .catch(err => alert('Something went wrong'))
+  
+  
+        this.contacts.push(contact);
+        this.count++;
+        window.dispatchEvent(this.event);
+        return true;
+      }
     }
+
+   
+
+
+
+ 
     return false;
   }
 
