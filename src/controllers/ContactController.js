@@ -74,6 +74,7 @@ class ContactController {
   }
 
   remove( contact_id ){
+
     for (let i = 0; i < this.contacts.length; i++) {
       if(this.contacts[i].id === contact_id){
         this.contacts.splice(i, 1);
